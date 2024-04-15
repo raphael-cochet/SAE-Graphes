@@ -2,7 +2,7 @@ import networkx as nx
 import json
 import matplotlib.pyplot as plt
 
-def afficher_graphe(nom_fichier):
+def construire_graphe(nom_fichier):
     G = nx.Graph()
 
     with open(nom_fichier) as json_load:
@@ -14,12 +14,30 @@ def afficher_graphe(nom_fichier):
                     actor1 = cast[i].strip("[]")
                     actor2 = cast[j].strip("[]")
                     G.add_edge(actor1, actor2, movie=movie["title"])
+    return G
 
+def afficher_graphe(G):
     plt.figure(figsize=(10, 8))
     pos = nx.spring_layout(G)
     nx.draw(G, pos, with_labels=True, node_size=35, node_color="skyblue", edge_color="gray", alpha=0.7, font_size=5)
-
     plt.show()
 
-def collaborateur_en_commun(acteur1, acteur2):
-    pass
+def collaborateur_en_commun(acteur1, acteur2, G):
+    '''
+    Renvoit l’ensemble des acteurs qui ont collaboré avec deux personnes.
+    Args:
+        acteur1 (str): Le nom d'un acteur
+        acteur2 (str): Le nom d'un acteur
+        G (nx.Graph): Le graphe contenant les collaborations entre acteurs
+    Returns:
+        set: L’ensemble des acteurs qui ont collaboré avec les deux acteurs spécifiés.
+    '''
+    if acteur1 not in G.nodes or acteur2 not in G.nodes:
+        return set()
+
+    voisins_acteur1 = set(G.neighbors(acteur1))
+    voisins_acteur2 = set(G.neighbors(acteur2))
+
+    collaborateurs_communs = voisins_acteur1.intersection(voisins_acteur2)
+    
+    return collaborateurs_communs
