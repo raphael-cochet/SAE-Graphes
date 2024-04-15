@@ -2,7 +2,6 @@ import networkx as nx
 import json
 import matplotlib.pyplot as plt
 
-
 def afficher_graphe(nom_fichier):
     G = nx.Graph()
 
@@ -21,3 +20,6 @@ def afficher_graphe(nom_fichier):
     nx.draw(G, pos, with_labels=True, node_size=35, node_color="skyblue", edge_color="gray", alpha=0.7, font_size=5)
 
     plt.show()
+
+def collaborateur_en_commun(acteur1, acteur2):
+    pass
