@@ -2,6 +2,7 @@ import networkx as nx
 import json
 import matplotlib.pyplot as plt
 
+#Q1
 def json_vers_nx(chemin):
     '''
     Construit un graphe à partir d'un fichier JSON contenant des films et leurs acteurs.
@@ -33,6 +34,7 @@ def afficher_graphe(G):
     nx.draw(G, pos, with_labels=True, node_size=35, node_color="skyblue", edge_color="gray", alpha=0.7, font_size=5)
     plt.show()
 
+#Q2
 def collaborateurs_communs(G, u, v):
     '''
     Renvoit l’ensemble des acteurs qui ont collaboré avec deux personnes.
@@ -50,6 +52,7 @@ def collaborateurs_communs(G, u, v):
     voisins_v = set(G.neighbors(v))
     return voisins_u.intersection(voisins_v)
 
+#Q3
 def collaborateurs_proches(G, u, k):
     '''
     Renvoit les acteurs qui se trouvent à distance au plus k d'un acteur
@@ -74,6 +77,32 @@ def collaborateurs_proches(G, u, k):
                     collaborateurs_directs.add(voisin)
         collaborateurs = collaborateurs.union(collaborateurs_directs)
     return collaborateurs
+
+def est_proche(G,u,v,k=1):
+    '''
+    Renvoit True si l'acteur est situé à coté d'un autre acteur
+    Args:
+        G (nx.Graph): Le graphe contenant les collaborations entre acteurs
+        u (str): Le nom d'un acteur
+        v (str): Le nom d'un acteur
+        k (int): La distance maximale
+    Returns:
+        boolean: True si les 2 acteurs sont à distance 1
+    '''
+    proches = collaborateurs_proches(G,u,k)
+    return v in proches
+
+def distance_naive(G,u,v):
+    '''
+    Trouve la distance entre 2 acteurs de façon naive
+    Args:
+        G (nx.Graph): Le graphe contenant les collaborations entre acteurs
+        u (str): Le nom du premier acteur.
+        v (str): Le nom du second acteur.
+    Returns:
+        int: la distance entre 2 acteurs
+    '''
+    pass
 
 def distance(G, u, v):
     '''
@@ -101,9 +130,9 @@ def distance(G, u, v):
             if voisin not in visited:
                 visited.add(voisin)
                 queue.append((voisin, distance + 1))
-
     return -1
 
+#Q4
 def centralite(G, u):
     '''
     Calcule l'excentricité d'un acteur dans un graphe.
@@ -144,13 +173,16 @@ def centre_hollywood(G):
             acteur_central = acteur
     return acteur_central
 
+#Q5
 def eloignement_max(G:nx.Graph):
     pass
 
 def centralite_groupe(G,S):
     pass
 
-
+#Bonus
+def centralite_groupe(G,S):
+    pass
 
 # TEST
 # dataTest2
