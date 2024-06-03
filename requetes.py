@@ -87,7 +87,7 @@ def est_proche(G,u,v,k=1):
         v (str): Le nom d'un acteur
         k (int): La distance maximale
     Returns:
-        boolean: True si les 2 acteurs sont à distance 1
+        boolean: True si les 2 acteurs sont à coté
     '''
     proches = collaborateurs_proches(G,u,k)
     return v in proches
@@ -102,7 +102,23 @@ def distance_naive(G,u,v):
     Returns:
         int: la distance entre 2 acteurs
     '''
-    pass
+    if u not in G.nodes or v not in G.nodes:
+        print(f"Erreur: Un des acteurs ({u}, {v}) n'existe pas dans le graphe.")
+        return -1
+
+    queue = [(u, 0)]
+    visited = set([u])
+
+    while queue:
+        current, distance = queue.pop(0)
+        if current == v:
+            return distance
+
+        for voisin in G.neighbors(current):
+            if voisin not in visited:
+                visited.add(voisin)
+                queue.append((voisin, distance + 1))
+    return -1
 
 def distance(G, u, v):
     '''
@@ -174,15 +190,46 @@ def centre_hollywood(G):
     return acteur_central
 
 #Q5
-def eloignement_max(G:nx.Graph):
-    pass
+def eloignement_max(G):
+    '''
+    Trouve l'éloignement maximal. 
+    Args:
+        G (nx.Graph): Le graphe contenant les collaborations entre acteurs.
+    Returns:
+        int: L'éloignement maximal.
+    '''
+    max_distance = 0
+    for u in G.nodes:
+        for v in G.nodes:
+            if u != v:
+                try:
+                    dist = nx.shortest_path_length(G, source=u, target=v)
+                    if dist > max_distance:
+                        max_distance = dist
+                except nx.NetworkXNoPath:
+                    continue
+    return max_distance
 
 def centralite_groupe(G,S):
-    pass
+    if not all(acteur in G.nodes for acteur in S):
+        print("Erreur: Un ou plusieurs acteurs du groupe n'existent pas dans le graphe.")
+        return -1
+
+    total_distance = 0
+    n = len(S)
+    
+    for i in range(n):
+        for j in range(i + 1, n):
+            total_distance += distance(G, S[i], S[j])
+    return total_distance / (n * (n - 1) / 2)
 
 #Bonus
-def centralite_groupe(G,S):
+def Bonus(G,S):
     pass
+
+# PARTIE 7
+# Calcul de distance experimentale
+
 
 # TEST
 # dataTest2
@@ -191,3 +238,5 @@ def centralite_groupe(G,S):
 # Al Pacino, Frank Oz, Jeremy Irons, Jay Mohr
 
 # graphe = json_vers_nx("data_100.json")
+
+# Liste actors_serpico = ["Al Pacino", "John Randolph", "Jack Kehoe"]

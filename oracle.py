@@ -6,9 +6,12 @@ liste_options = [
     "Collaborateurs en communs",
     "Collaborateur proche",
     "Est proche",
+    "Distance naive",
     "Distance entre acteurs",
     "Centralite d'un acteur",
     "Trouver l'acteur central",
+    "Trouver eloignement max",
+    "Centralite du groupe",
 ]
 
 def afficher_menu(titre, liste_options):
@@ -55,18 +58,30 @@ def programme_principal():
                 print("L'acteur", acteur1, "est proche de", acteur2)
             else:
                 print("L'acteur", acteur1, "n'est pas proche de", acteur2)
-        elif rep == '5': # Distance entre acteurs
+        elif rep == '5': # Distance naive
+            print("Vous avez choisi :", liste_options[int(rep) - 1])
+            acteur1 = input("Entrez le nom de l'acteur 1: ")
+            acteur2 = input("Entrez le nom de l'acteur 2: ")
+            print("La distance naive entre", acteur1, "et", acteur2, "est :", distance_naive(G, acteur1, acteur2))
+        elif rep == '6': # Distance entre acteurs
             print("Vous avez choisi :", liste_options[int(rep) - 1])
             acteur1 = input("Entrez le nom de l'acteur 1: ")
             acteur2 = input("Entrez le nom de l'acteur 2: ")
             print("La distance entre", acteur1, "et", acteur2, "est :", distance(G, acteur1, acteur2))
-        elif rep == '6': # Centralite d'un acteur
+        elif rep == '7': # Centralite d'un acteur
             print("Vous avez choisi :", liste_options[int(rep) - 1])
             acteur = input("Entrez le nom de l'acteur: ")
             print("L'excentricité de:", acteur, "est de:", centralite(G, acteur))
-        elif rep == '7': # Trouver l'acteur central
+        elif rep == '8': # Trouver l'acteur central
             print("Vous avez choisi :", liste_options[int(rep) - 1])
             print("L'acteur le plus central du graphe est:", centre_hollywood(G))
+        elif rep == '9': # Trouver eloignement max
+            print("Vous avez choisi :", liste_options[int(rep) - 1])
+            print("L'éloignement max est:", eloignement_max(G))
+        elif rep == '10': # Centralite du groupe
+            print("Vous avez choisi :", liste_options[int(rep) - 1])
+            liste = input("Entrez une liste acteur: ")
+            print("L'éloignement max est:", centralite_groupe(G, liste))
         elif rep == 'q':
             print("Merci, au revoir!")
             break
