@@ -243,12 +243,7 @@ def mesurer_temps_execution(G, acteur1, acteur2):
     end_time_dijkstra = time.time()
     temps_dijkstra = end_time_dijkstra - start_time_dijkstra
 
-    start_time_dijkstra_nx = time.time()
-    distance_dijkstra_nx(G, acteur1, acteur2)
-    end_time_dijkstra_nx = time.time()
-    temps_dijkstra_nx = end_time_dijkstra_nx - start_time_dijkstra_nx
-
-    return temps_bfs, temps_dijkstra, temps_dijkstra_nx
+    return temps_bfs, temps_dijkstra
 
 
 def distance_bfs(G, u, v):
