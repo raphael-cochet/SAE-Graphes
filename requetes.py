@@ -122,7 +122,7 @@ def distance_naive(G,u,v):
 
 def distance(G, u, v):
     '''
-    Trouve la distance entre deux acteurs dans un graphe.
+    Trouve la distance entre deux acteurs dans un graphe en utilisant l'algo de Dijkstra.
     Args:
         G (nx.Graph): Le graphe contenant les collaborations entre acteurs.
         u (str): Le nom du premier acteur.
@@ -134,18 +134,32 @@ def distance(G, u, v):
         print(f"Erreur: Un des acteurs ({u}, {v}) n'existe pas dans le graphe.")
         return -1
 
-    queue = [(u, 0)]
-    visited = set([u])
+    distances = {node: float('inf') for node in G.nodes}
+    distances[u] = 0
 
-    while queue:
-        current, distance = queue.pop(0)
-        if current == v:
-            return distance
+    non_visited = list(G.nodes)
 
-        for voisin in G.neighbors(current):
-            if voisin not in visited:
-                visited.add(voisin)
-                queue.append((voisin, distance + 1))
+    while non_visited:
+        min_node = None
+        for node in non_visited:
+            if min_node is None:
+                min_node = node
+            elif distances[node] < distances[min_node]:
+                min_node = node
+
+        if distances[min_node] == float('inf'):
+            break
+
+        for neighbor in G.neighbors(min_node):
+            alt = distances[min_node] + 1
+            if alt < distances[neighbor]:
+                distances[neighbor] = alt
+
+        non_visited.remove(min_node)
+
+        if min_node == v:
+            return distances[min_node]
+
     return -1
 
 #Q4
@@ -210,21 +224,16 @@ def eloignement_max(G):
                     continue
     return max_distance
 
-def centralite_groupe(G,S):
-    if not all(acteur in G.nodes for acteur in S):
-        print("Erreur: Un ou plusieurs acteurs du groupe n'existent pas dans le graphe.")
-        return -1
-
-    total_distance = 0
-    n = len(S)
-    
-    for i in range(n):
-        for j in range(i + 1, n):
-            total_distance += distance(G, S[i], S[j])
-    return total_distance / (n * (n - 1) / 2)
-
 #Bonus
-def Bonus(G,S):
+def centralite_groupe_acteur(G, S):
+    '''
+    Trouve l'acteur le plus central par rapport à un groupe d'acteurs.
+    Args:
+        G (nx.Graph): Le graphe contenant les collaborations entre acteurs.
+        S (list): La liste des noms des acteurs du groupe.
+    Returns:
+        str: Le nom de l'acteur le plus central par rapport au groupe.
+    '''
     pass
 
 # PARTIE 7
@@ -280,7 +289,3 @@ def distance_dijkstra(G, u, v):
 # data_100
 
 # Al Pacino, Frank Oz, Jeremy Irons, Jay Mohr
-
-# graphe = json_vers_nx("data_100.json")
-
-# Liste actors_serpico = ["Al Pacino", "John Randolph", "Jack Kehoe"]
