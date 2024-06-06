@@ -243,38 +243,23 @@ import time
 
 def mesurer_temps_execution(G, acteur1, acteur2):
     start_time_bfs = time.time()
-    distance_bfs(G, acteur1, acteur2)
+    distance_naive(G, acteur1, acteur2)
     end_time_bfs = time.time()
     temps_bfs = end_time_bfs - start_time_bfs
 
-    start_time_dijkstra = time.time()
-    distance_dijkstra(G, acteur1, acteur2)
-    end_time_dijkstra = time.time()
-    temps_dijkstra = end_time_dijkstra - start_time_dijkstra
+    start_time_distance = time.time()
+    distance(G, acteur1, acteur2)
+    end_time_distance = time.time()
+    temps_distance = end_time_distance - start_time_distance
 
-    return temps_bfs, temps_dijkstra
+    start_time_dijkstra_nx = time.time()
+    distance_dijkstra_nx(G, acteur1, acteur2)
+    end_time_dijkstra_nx = time.time()
+    temps_dijkstra_nx = end_time_dijkstra_nx - start_time_dijkstra_nx
 
+    return temps_bfs, temps_distance, temps_dijkstra_nx
 
-def distance_bfs(G, u, v):
-    if u not in G.nodes or v not in G.nodes:
-        print(f"Erreur: Un des acteurs ({u}, {v}) n'existe pas dans le graphe.")
-        return -1
-
-    queue = [(u, 0)]
-    visited = set([u])
-
-    while queue:
-        current, dist = queue.pop(0)
-        if current == v:
-            return dist
-
-        for neighbor in G.neighbors(current):
-            if neighbor not in visited:
-                visited.add(neighbor)
-                queue.append((neighbor, dist + 1))
-    return -1
-
-def distance_dijkstra(G, u, v):
+def distance_dijkstra_nx(G, u, v):
     if u not in G.nodes or v not in G.nodes:
         print(f"Erreur: Un des acteurs ({u}, {v}) n'existe pas dans le graphe.")
         return -1
@@ -288,4 +273,4 @@ def distance_dijkstra(G, u, v):
 # dataTest2
 # data_100
 
-# Al Pacino, Frank Oz, Jeremy Irons, Jay Mohr
+# Al Pacino, Frank Oz, Jeremy Irons, Jay Mohr, Richard Pis
