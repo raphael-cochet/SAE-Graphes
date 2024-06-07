@@ -10,6 +10,7 @@ liste_options = [
     "Distance entre acteurs",
     "Centralite d'un acteur",
     "Trouver l'acteur central",
+    "Trouver l'acteur central avec nx",
     "Trouver eloignement max",
     "Temps d'execution de distance"
 ]
@@ -75,10 +76,13 @@ def programme_principal():
         elif rep == '8': # Trouver l'acteur central
             print("Vous avez choisi :", liste_options[int(rep) - 1])
             print("L'acteur le plus central du graphe est:", centre_hollywood(G))
-        elif rep == '9': # Trouver eloignement max
+        elif rep == '9': # Trouver l'acteur central avec NX
+            print("Vous avez choisi :", liste_options[int(rep) - 1])
+            print("L'acteur le plus central du graphe avec nx est:", centre_hollywood_nx(G))
+        elif rep == '10': # Trouver eloignement max
             print("Vous avez choisi :", liste_options[int(rep) - 1])
             print("L'éloignement max est:", eloignement_max(G))
-        elif rep == '10': # Temps d'execution de distance"
+        elif rep == '11': # Temps d'execution de distance"
             print("Vous avez choisi :", liste_options[int(rep) - 1])
             acteur1 = input("Entrez le nom de l'acteur 1: ")
             acteur2 = input("Entrez le nom de l'acteur 2: ")

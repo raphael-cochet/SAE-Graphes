@@ -203,6 +203,20 @@ def centre_hollywood(G):
             acteur_central = acteur
     return acteur_central
 
+def centre_hollywood_nx(G):
+    '''
+    Trouve l'acteur le plus central dans un graphe en utilisant une fonction nx.
+    Args:
+        G (nx.Graph): Le graphe contenant les collaborations entre acteurs.
+    Returns:
+        str: Le nom de l'acteur le plus central.
+    '''
+    try:
+        return nx.center(G)[0]
+    except nx.NetworkXError as e:
+        print("Erreur lors du calcul du centre du graphe:", e)
+        return None
+
 #Q5
 def eloignement_max(G):
     '''
